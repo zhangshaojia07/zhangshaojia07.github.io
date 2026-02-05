@@ -36,7 +36,7 @@ date = "2026-02-05T20:30:17+08:00"
     </a>
   </div>
 
-  <div style="flex: 1 0 23rem">
+  <div style="flex: 1 0 24rem">
     <label>Natural Languages</label>
     <div style="display: flex; align-items: center; gap: 1.2rem; flex-wrap: nowrap;">
         <label style="display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
@@ -48,7 +48,7 @@ date = "2026-02-05T20:30:17+08:00"
             <input type="checkbox" disabled checked/> English
         </label>
         <label style="display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
-            <input type="checkbox" disabled/> Other
+            <input type="checkbox" disabled/> Others
         </label>
         <label style="display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
         </label>
@@ -62,7 +62,7 @@ date = "2026-02-05T20:30:17+08:00"
     </div>
   </div>
 
-  <div style="flex: 1 0 29rem">
+  <div style="flex: 1 0 30rem">
     <label>Programming Languages</label>
     <div style="display: flex; align-items: center; gap: 1.2rem; flex-wrap: nowrap;">
         <label style="display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
@@ -77,7 +77,29 @@ date = "2026-02-05T20:30:17+08:00"
             <input type="checkbox" disabled checked/> JavaScript
         </label>
         <label style="display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
-            <input type="checkbox" disabled/> Other
+            <input type="checkbox" disabled/> Others
+        </label>
+        <label style="display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
+        </label>
+    </div>
+  </div>
+
+  <div style="flex: 1 0 40rem">
+    <label>Education Level</label>
+    <div style="display: flex; align-items: center; gap: 1.2rem; flex-wrap: nowrap;">
+        <label style="display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
+        </label>
+        <label style="display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
+            <input type="checkbox" disabled/> Primary
+        </label>
+        <label style="display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
+            <input type="checkbox" disabled/> Secondary
+        </label>
+        <label style="display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
+            <input type="checkbox" disabled checked/> Undergraduate
+        </label>
+        <label style="display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
+            <input type="checkbox" disabled/> Postgraduate
         </label>
         <label style="display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
         </label>
@@ -88,6 +110,6 @@ date = "2026-02-05T20:30:17+08:00"
 
 <br />
 
-<button type="submi" onclick="alert('Object already exists: Cannot instantiate another ShaojiaZhang().')">Submit</button>
+<button type="submi" onclick="alert('Object already exists: Cannot instantiate another ShaojiaZhang().')">SUBMIT</button>
 
 </fieldset>
