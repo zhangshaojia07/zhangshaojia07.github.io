@@ -3,18 +3,27 @@ languageCode = 'en-us'
 theme = 'terminal'
 pagination.pagerSize = 5
 
-[markup.goldmark.renderer]
-  unsafe = true
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)']]
 
 [params]
   contentTypeName = "posts"
   showMenuItems = 2
   fullWidthTheme = false
   centerTheme = false
+  math = true
 
 [languages]
   [languages.en]
-    title = "Terminal"
+    title = "Shaojia@Blog"
     subtitle = "A simple, retro theme for Hugo"
     keywords = ""
     copyright = ""
@@ -23,7 +32,7 @@ pagination.pagerSize = 5
     readOtherPosts = "Read other posts"
 
     [languages.en.params.logo]
-      logoText = "Terminal"
+      logoText = "Shaojia"
       logoHomeLink = "/"
 
     [languages.en.menu]
