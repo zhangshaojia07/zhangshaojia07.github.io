@@ -6,6 +6,7 @@ tags = []
 description = "Sample article showcasing basic styling and formatting for HTML elements."
 showFullContent = false
 hideComments = false
+Toc = true
 +++
 
 This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.
@@ -173,6 +174,20 @@ pre {
 * Dairy
   * Milk
   * Cheese
+  
+## LaTeX
+
+Using MathJax engine.
+
+$$\LaTeX$$
+
+$$ \int_{0}^{\infty}e^{-x}\text{ d}x $$
+
+\[
+  \text{why are you still there?}
+\]
+
+I have \(e^{\pi\text{i}}+1\) ideas.
 
 ## Other Elements — abbr, sub, sup, kbd, mark
 
