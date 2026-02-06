@@ -1,6 +1,11 @@
 +++
+author = "Shaojia"
 title = "About"
 date = "2026-02-05T20:30:17+08:00"
+tags = []
+description = ""
+showFullContent = false
+hideComments = false
 +++
 
 <fieldset>
