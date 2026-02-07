@@ -9,25 +9,22 @@ hideComments = false
 Toc = true
 +++
 
-This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.
+This article offers a sample of basic Markdown and LaTeX syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.
 <!--more-->
 
 ## Headings
 
-# H1
-## H2
-### H3
-### H4
-#### H5
-##### H6
+From `H1` to `H6` are all available. They are not shown to maintaining the tidyness of TOC.
 
 ## Images
 
-![Terminal Theme Preview](/img/terminal-theme.png)
+![Terminal Theme Preview](test.png)
+
+<img src="test.png" alt="Terminal Theme Preview"/>
 
 ### Figure with a caption
 
-{{< figure src="/img/terminal-theme.png" alt="Terminal Theme Preview" position="center" caption="Terminal Theme Preview" captionPosition="center" >}}
+{{< figure src="test.png" alt="Terminal Theme Preview" position="center" caption="Terminal Theme Preview" captionPosition="center" >}}
 
 ## Blockquotes
 
@@ -47,7 +44,9 @@ The blockquote element represents content that is quoted from another source, op
 
 ## Buttons and links
 
-<button>Button</button>
+<button onclick="alert('Yes!')">Button</button>
+
+[Link]()
 <a href="">Link</a>
 <a href="" class="button inline">Link</a>
 
@@ -86,68 +85,42 @@ Tables aren't part of the core Markdown spec, but Hugo supports supports them ou
 
 ### Code block with backticks
 
-```html
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Example HTML5 Document</title>
-</head>
-<body>
-  <p>Test</p>
-</body>
-</html>
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+	printf("Yes, sir!");
+	return 0;
+}
 ```
 
 ### Code block indented with four spaces
 
-    <!doctype html>
-    <html lang="en">
-    <head>
-      <meta charset="utf-8">
-      <title>Example HTML5 Document</title>
-    </head>
-    <body>
-      <p>Test</p>
-    </body>
-    </html>
+    #include<bits/stdc++.h>
+    using namespace std;
+    int main(){
+      printf("Yes, sir!");
+      return 0;
+    }
 
 ### Code block with Hugo's internal highlight shortcode
 
-{{< highlight html >}}
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Example HTML5 Document</title>
-</head>
-<body>
-  <p>Test</p>
-</body>
-</html>
+{{< highlight cpp >}}
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+	printf("Yes, sir!");
+	return 0;
+}
 {{< /highlight >}}
 
 ### Code block with custom built-in `{{ < code > }}` shortcode
 
-{{< code title="Hey, this is a code block title" language="css" >}}
-pre {
-  background: #1a1a1d;
-  padding: 20px;
-  border-radius: 8px;
-  font-size: 1rem;
-  overflow: auto;
-
-  @media (--phone) {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-
-  code {
-    background: none !important;
-    color: #ccc;
-    padding: 0;
-    font-size: inherit;
-  }
+{{< code title="Hey, this is a code block title" language="cpp" >}}#include<bits/stdc++.h>
+using namespace std;
+int main(){
+	printf("Yes, sir!");
+	return 0;
 }
 {{< /code >}}
 
