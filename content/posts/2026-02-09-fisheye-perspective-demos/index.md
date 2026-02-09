@@ -11,9 +11,9 @@ hideComments = false
 
 Originally I scrolled through videos on [Bilibili](https://www.bilibili.com/). I found a controversial topic about how to correctly draw a fish-eye perspective picture. Some claim that grid lines are distorted to perfect circles, while others believe ellipses are the correct way to draw it. From what I've seen, most artists believe drawing circles is the answer or only teach it. It makes sense since drawing a circle on the paper is way easier than an ellipse.<cite>[^1]</cite>
 
-[^1]: Imagine someone repeats pluging in two pins and pull them out to complete a painting full of holes.
+[^1]: Imagine someone repeatedly inserting two pins and then pulling them out to finish a painting that is dotted with holes.
 
-Although I can't draw and I haven't entered the field of computer graphics, I wrote a script to illustrate what do different fisheye cameras see.
+Although I can't draw, and I haven't entered the field of computer graphics, I wrote a script to illustrate what do different fisheye cameras see.
 
 {{< code title="I spent quite a lot of time on this Python code." language="py" >}}
 # /// script
@@ -201,7 +201,7 @@ Here are the results. Have fun with these figures!
 >
 > The red circle represent 180°<cite>[^2]</cite> FOV boundaries. The grid line (\*,0,1) is coloured magenta and (0,\*,1) is coloured blue.
 
-[^2]: Precautionary note: \(\theta\) and other math notations are measured in radian.
+[^2]: Precautionary note: \(\theta\) and other maths notations are measured in radian.
 
 {{< figure src="figA.png" alt="figA" position="center" caption="Figure A" captionPosition="center" >}}
 
@@ -215,8 +215,8 @@ Below, \(\theta\) is the angle from central axis of view to the line connecting 
 
 The proof isn't hard, but I still drew a green ellipse on Pic 3 and a perfect circle on Pic 4 in Figure A just to make it look more convincing.
 
-Notice: i additionally draw (\*,\*,-1) grid on Pic 4.
-The green circle consists two parts:
+Notice: I additionally draw (\*,\*,-1) grid on Pic 4.
+The green circle consists of two parts:
 * The upper "\(\frown\)" portion formed by (\*,1.2,1)
 * The lower "U" portion formed by (\*,-1.2,-1)
 
@@ -231,3 +231,17 @@ And this is 90° counterclockwise.
 {{< figure src="figC.png" alt="figC" position="center" caption="Figure C" captionPosition="center" >}}
 
 Here are hi-res pictures of indices 3 and 4 in Figure A, B, and C: [hi-res.png (6145x4178)](hi-res.png)
+
+Next, we'll discuss some sketching and drawing techniques in the "circle" mode (index 4).
+
+You may find out two vanishing points (VPs) on the magenta line in Pic 4, Figure B. They have such geometrical relation with the FOV circle: [ VP1 - Top point on the FOV circle - VP2 ] is a right angle. It shows VP1 and VP2 are somehow "antipodal" on the magenta line. Actually it is. If we arrange horizontal VPs on a circle by their angles of view, then what we've just done is the [**stereographic projection**](https://en.wikipedia.org/wiki/Stereographic_projection). Because two VPs are antipodal, the angle at the circumference is 180°/2=90°.
+
+This method is not limited to horizontal lines. You can always determine the two VPs of any direction in 3D on the screen.
+
+How to draw a line given the direction and a point on it: find the two VPs first, then draw the circle passing through the two VPs and the point.
+
+By lines of specific direction, you can constrain lengths in different axes to be proportional. You can scale a segment by any factor in the same direction by simply constrain back.
+
+If you happen to understand Chinese, [here](https://www.bilibili.com/video/BV1LpN2zQESK) is a video covering a part of sketching tips (but slightly differ from what I say).
+
+So far, we can draw almost anything precisely from this perspective. The only thing we don't know and never know is the real size of the objects on the screen.
