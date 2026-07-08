@@ -156,11 +156,11 @@ $$\LaTeX$$
 
 $$ \int_{0}^{\infty}e^{-x}\text{ d}x $$
 
-\[
+$$
   \text{why are you still there?}
-\]
+$$
 
-I have \(e^{\pi\text{i}}+1\) ideas.
+I have $e^{\pi\text{i}}+1$ ideas.
 
 ## Other Elements — abbr, sub, sup, kbd, mark
 

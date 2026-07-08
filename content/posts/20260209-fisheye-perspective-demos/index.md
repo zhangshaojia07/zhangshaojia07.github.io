@@ -201,23 +201,23 @@ Here are the results. Have fun with these figures!
 >
 > The red circle represent 180°<cite>[^2]</cite> FOV boundaries. The grid line (\*,0,1) is coloured magenta and (0,\*,1) is coloured blue.
 
-[^2]: Precautionary note: \(\theta\) and other maths notations are measured in radian.
+[^2]: Precautionary note: $\theta$ and other maths notations are measured in radian.
 
 {{< figure src="figA.png" alt="figA" position="center" caption="Figure A" captionPosition="center" >}}
 
-Below, \(\theta\) is the angle from central axis of view to the line connecting view point and the small object; \(r\) is the distance from screen centre to the image of the object.
+Below, $\theta$ is the angle from central axis of view to the line connecting view point and the small object; $r$ is the distance from screen centre to the image of the object.
 
-0. \(r=\theta\). 180° FOV circle has radius of \(\pi/2\).
-1. \(r=2\sin(\frac\theta2)\). 180° FOV circle has radius of \(\sqrt 2\).
-2. \(r=\tan(\theta)\). The simplest perspective projection. Straightness of lines is preserved.
-3. \(r=\sin(\theta)\). The "ellipse" mode. 180° FOV circle has radius of \(1\).
-4. \(r=2\tan(\frac\theta2)\). The "circle" mode. 180° FOV circle has radius of \(2\).
+0. $r=\theta$. 180° FOV circle has radius of $\pi/2$.
+1. $r=2\sin(\frac\theta2)$. 180° FOV circle has radius of $\sqrt 2$.
+2. $r=\tan(\theta)$. The simplest perspective projection. Straightness of lines is preserved.
+3. $r=\sin(\theta)$. The "ellipse" mode. 180° FOV circle has radius of $1$.
+4. $r=2\tan(\frac\theta2)$. The "circle" mode. 180° FOV circle has radius of $2$.
 
 The proof isn't hard, but I still drew a green ellipse on Pic 3 and a perfect circle on Pic 4 in Figure A just to make it look more convincing.
 
 Notice: I additionally draw (\*,\*,-1) grid on Pic 4.
 The green circle consists of two parts:
-* The upper "\(\frown\)" portion formed by (\*,1.2,1)
+* The upper "$\frown$" portion formed by (\*,1.2,1)
 * The lower "U" portion formed by (\*,-1.2,-1)
 
 > Rendering light from back is disabled in Figure B and Figure C, except Pic 4.

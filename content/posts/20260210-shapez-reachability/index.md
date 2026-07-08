@@ -123,10 +123,10 @@ Shape Y is one piece more than shape X. If the extra piece is not the bottom pie
 Now, let's set some narrowing-down rules to make caseworking possible. These rules should be proven not to make any reachable shapes irreachable. Every Rule-i is based on each Rule-j, where j < i .
 
 **Rule-1:**
-Shape X stacks on shape Y. The index set of non-empty columns in X is \(X\) and Y is \(Y\). Then \(|X\cap Y|\le 1\). 
+Shape X stacks on shape Y. The index set of non-empty columns in X is $X$ and Y is $Y$. Then $|X\cap Y|\le 1$. 
 
 > **Proof.**
-> Assume \(i,j\in |X\cap Y|\) are different column indices, that X and Y "touch" each other in column j.
+> Assume $i,j\in |X\cap Y|$ are different column indices, that X and Y "touch" each other in column j.
 >
 > If there's no '=' in column i in X, re-allocating the whole column i to Y is also validable and obeys Rule-1. The "lower" is due to TRC-1, and the column i in "upper" was not load-bearing.
 >
@@ -140,7 +140,7 @@ Shape X stacks on shape Y. There must be two or more non-empty columns in X.
 > **Proof.**
 > If the occupied columns don't intersect, it must hold DRC-2. Otherwise, it is directly from TRC-1.
 
-Due to Rule-1 and Rule-2, we naturally rank the shapes by the number of non-empty columns. If a shape of rank \(x_1\) doesn't meet DRC-1 nor DRC-2, it must be constructed directly from: a shape of rank \(x_2\) stacks on a shape of rank \(x_3\), where \(x_2+x_3=x_1,x_2\in[2,x_1],x_3\in[1,x_1-1]\). From now on, we use abbreviations like "2-on-1", "2-on-3", and "4-on-1", showing the ranks of the stacking shapes.
+Due to Rule-1 and Rule-2, we naturally rank the shapes by the number of non-empty columns. If a shape of rank $x_1$ doesn't meet DRC-1 nor DRC-2, it must be constructed directly from: a shape of rank $x_2$ stacks on a shape of rank $x_3$, where $x_2+x_3=x_1,x_2\in[2,x_1],x_3\in[1,x_1-1]$. From now on, we use abbreviations like "2-on-1", "2-on-3", and "4-on-1", showing the ranks of the stacking shapes.
 
 # Casework
 
