@@ -13,6 +13,10 @@ pagination.pagerSize = 5
         [markup.goldmark.extensions.passthrough.delimiters]
           block = [['\[', '\]'], ['$$', '$$']]
           inline = [['\(', '\)']]
+  [markup.tableOfContents]
+    endLevel = 6
+    ordered = false
+    startLevel = 1
 
 [params]
   # dir name of your main content (default is `content/posts`).

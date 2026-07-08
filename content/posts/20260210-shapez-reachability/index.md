@@ -10,7 +10,7 @@ hideComments = false
 Toc = true
 +++
 
-## Intro
+# Intro
 
 <!-- 
 <div style="float: right; margin: 0 0 10px 15px;">
@@ -28,11 +28,11 @@ After going through a series of random attempts, I put this project on hold for 
 
 > If you are looking for test data, pieces of code, or my trail of tortuous exploration, please visit [the repo](https://github.com/zhangshaojia07/shapez-reachability).
 
-## Abstraction
+# Abstraction
 
 Firstly, the shape and colour of each piece in every shape don't matter with the reachability. So every slot has the information of a Boolean variable, representing whether there is a piece. Thus, a shape is a Boolean 2D-array of shape (4,n), where n is the height of the shape.
 
-## Decomposition
+# Decomposition
 
 Speaking of methodology, I made a list of methods to implement after random scribbling:
 
@@ -66,7 +66,7 @@ There are two adjacent columns that are both empty.
 > **Proof.**
 > You can place any filler pieces within the two empty columns. Every piece required can be stacked in place using a 1-layer semi-circle. Finally, cut off the two empty columns.
 
-DRC-1 is truely fundamental. For any shape that doesn't satisfy DRC-1, the final step in its construction cannot be a "cut" operation. Thus, we can eliminate the "cut" operation entirely and construct all shapes starting from those that satisfy DRC-1.
+DRC-1 is truly fundamental. For any shape that doesn't satisfy DRC-1, the final step in its construction cannot be a "cut" operation. Thus, we can eliminate the "cut" operation entirely and construct all shapes starting from those that satisfy DRC-1.
 
 Now, excluding "rotate", we are left with only one type of operation: "stack". This simplification always gives me the strong impression that we are just one step away from success. However "stack" operation is not associative! A typical example is shown<cite>[^3]</cite> below:
 ```text
@@ -92,7 +92,7 @@ Let's explore the DRCs in more depth.
 Bottom layer consists two or more pieces.
 
 > **Proof.**
-> There's always a way to cut the shape into two semi-cylinders. DRC-1 holds for both parts.
+> There's always a way to cut the shape into two semi-cylinders that DRC-1 holds for both parts.
 
 **Definition-1:**
 A '=' is a pair of adjacent pieces in the same column. Its row index is that of the **upper** piece.
@@ -112,61 +112,111 @@ Two adjacent columns both contain '='.
 
 [^4]: Using `numpy` subscript format.
 
-Don't panic. There won't be DRC-4. Now, let's set some narrowing-down rules to make caseworking possible. These rules should be proven not to make any reachable shapes irreachable. Every Rule-i is based on each Rule-j, where j < i .
+Don't panic. There won't be DRC-4. However, a transitional reachability condition (TRC) needs to appear here.
+
+**TRC-1:**
+Shape Y is one piece more than shape X. If the extra piece is not the bottom piece in its column in shape Y, the reachability of shape X implies that of shape Y. 
+
+> **Proof.**
+> Denote the extra piece p and the next piece below q. Retrace the piece q in the binary component tree. Whether q is included in the "upper" or "lower" shape in a stack operation, p can stick with q. Eventually, we construct p above q before the cut operation in the very beginning.
+
+Now, let's set some narrowing-down rules to make caseworking possible. These rules should be proven not to make any reachable shapes irreachable. Every Rule-i is based on each Rule-j, where j < i .
 
 **Rule-1:**
 Shape X stacks on shape Y. The index set of non-empty columns in X is \(X\) and Y is \(Y\). Then \(|X\cap Y|\le 1\). 
 
 > **Proof.**
-> TBD
+> Assume \(i,j\in |X\cap Y|\) are different column indices, that X and Y "touch" each other in column j.
+>
+> If there's no '=' in column i in X, re-allocating the whole column i to Y is also validable and obeys Rule-1. The "lower" is due to TRC-1, and the column i in "upper" was not load-bearing.
+>
+> Otherwise, find an arbitrary '=' in column i in X, say at row r. Re-allocate [i,:r] to Y. The "lower" is guaranteed by TRC-1. The "upper" is separated into two semi-cylinders with one touch to "lower" each. The construction is similar to that of proof of DRC-2.
+>
+> Because the adjustment can only make shape Y bigger, so it must have an end obeying Rule-1.
 
 **Rule-2:**
 Shape X stacks on shape Y. There must be two or more non-empty columns in X.
 
 > **Proof.**
-> TBD
+> If the occupied columns don't intersect, it must hold DRC-2. Otherwise, it is directly from TRC-1.
 
-Due to Rule-1 and Rule-2, we naturally rank the shapes by the number of non-empty columns. If a shape of rank \(x_1\) doesn't meet DRC-1 nor DRC-2, it must be constructed directly from: a shape of rank \(x_2\) stacks on a shape of rank \(x_3\), where \(x_2+x_3=x_1,x_2\in[2,x_1],x_3\in[1,x_1-1]\). From now on, we use abbreviations like "2on1", "2on3", and "4on1", showing the ranks of the stacking shapes.
+Due to Rule-1 and Rule-2, we naturally rank the shapes by the number of non-empty columns. If a shape of rank \(x_1\) doesn't meet DRC-1 nor DRC-2, it must be constructed directly from: a shape of rank \(x_2\) stacks on a shape of rank \(x_3\), where \(x_2+x_3=x_1,x_2\in[2,x_1],x_3\in[1,x_1-1]\). From now on, we use abbreviations like "2-on-1", "2-on-3", and "4-on-1", showing the ranks of the stacking shapes.
 
-## Casework
+# Casework
 
 We categorize all shapes by their "xxxx" form, with equivalence of rotation.
 
-### 1000 & 1100
+## 1000 & 1100
 
 DRC-2 holds for both cases.
 
-### 1010
+## 1010
 
 **Definition-2:**
 A segment bottom (seg_bot) is a piece that either is the bottom piece in its column, or forms a '=' with a lower piece.
 
-#### DRC-2
+### By DRC-2
 
-Condition: if both of the columns have a piece in the bottom layer.
+Condition: if each of the columns has the piece in the bottom layer.
 
-#### 2on1
+### By 2-on-1
 
-The "2" in "2on1" is either DRC-2-holding or in "2on1" form (which makes a recursion). The exit of the recursion can only be DRC-2. So,
+At least one of them holds:
+1. The "2" in "2-on-1" is DRC-2-holding.
+2. The "2" in "2-on-1" is in "2-on-1" form (which makes a recursion)
+3. The stack result is DRC-2-holding.
 
-Condition: if the two columns have a seg_bot at the same height (excluding the bottom layer).
+Nevertheless, the exit of the recursion can only be DRC-2. So,
 
-#### Summary
+Condition: if the two columns have a seg_bot at the same height.
 
-The exclusion in "2on1" is exactly the condition in "DRC-2".
+### Summary
+
+You may have noticed that the "DRC-2" case is completely included in "2-on-1", as the base case of the recursion.
 
 So, the shape is reachable iff **the two columns have a seg_bot at the same height**.
 
-You might have noticed some relations between "DRC-2" and "2on1". In the following cases, every "DRC-2" is merged into the corresponding "Kon1". 
+In the following cases, every "DRC-2" is merged into the corresponding "k-on-1". 
 
-### 1110
+## 1110
 
-#### 2on2
+We index the three non-empty columns 0,1,2.
 
-##### 1010 on 1100
+### By 0110 on 1100
 
-#### 3on1
+Easy. Iff at least one '=' exists in the column 1.
 
-### 1111
+### By 1010 on (1100 or 0110)
 
-## Outro
+Iff column 0 and 2 have seg_bots at the same height, and not both of them are the bottom pieces in their columns.
+
+**Definition-3:**
+If the column is non-empty, the definition of high_eq is the row index of the highest '=' in the column. If the column doesn't contain any '=', then high_eq is the row index of its bottom piece.
+
+### By 3-on-1
+
+It must be a DRC-2-holding shape repetitively stacking on "1"s and touching them one-by-one (If not, it results in a new DRC-2-holding shape which we can start from).
+
+For the starting DRC-2-holding shape, two columns have the bottom pieces and the other column has the bottom pieces not lower than them.
+
+Hence, the condition is: a row is not higher than the minimum of high_eqs of the three columns, and at least two columns have seg_bots in the row.
+
+### By (1100 or 0110) on 1010
+
+This case is either included in "1010 on (1100 or 0110)" or DRC-2, which is included in "3-on-1".
+
+### Summary
+
+1. column 1 has '='.
+2. column 0 and 2 have seg_bots at the same height, and not both of them are the bottom pieces in their columns.
+3. a row is not higher than the minimum of high_eqs of the three columns, and at least two columns have seg_bots in the row.
+
+## 1111
+
+### By 4-on-1
+
+Condition: a row is not higher than the minimum of high_eqs of the four columns, and at least two columns have seg_bots in the row.
+
+### 
+
+# Outro
