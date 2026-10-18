@@ -2,7 +2,7 @@
 author = "Shaojia"
 title = "THUPC 2026 Trip Report"
 date = "2026-04-13T23:25:02+08:00"
-tags = []
+tags = ["THUPC", "ICPC", "Competitive Programming", "Trip Report"]
 description = "I caught the train to Beijing on 11th April to compete in THUPC 2026 the following day, after months away from OI. It's a bittersweet farewell to my ten-year competitive career."
 showFullContent = false
 hideComments = false

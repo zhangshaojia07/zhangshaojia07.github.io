@@ -2,7 +2,7 @@
 author = "Shaojia"
 title = "Notes on IMO 2025"
 date = "2026-02-06T19:21:39+08:00"
-tags = []
+tags = ["Mathematics", "Olympiad", "IMO"]
 cover = "p1-fig1.png"
 description = ""
 showFullContent = false

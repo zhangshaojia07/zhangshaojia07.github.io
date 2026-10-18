@@ -2,7 +2,7 @@
 author = "Shaojia"
 title = "Hello World"
 date = "2026-02-05T19:43:07+08:00"
-tags = []
+tags = ["Meta", "Blog"]
 description = ""
 showFullContent = false
 hideComments = false

@@ -2,7 +2,7 @@
 author = "Shaojia"
 title = "Bridg-it - Disjoint Spanning Trees"
 date = "2026-08-13T14:56:26+08:00"
-tags = []
+tags = ["Graph Theory", "Mathematics", "Bridg-it"]
 description = ""
 showFullContent = false
 hideComments = false

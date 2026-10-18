@@ -2,7 +2,7 @@
 author = "Shaojia"
 title = "Which Shapes Are Reachable in Shapez?"
 date = "2026-02-10T17:22:38+08:00"
-tags = []
+tags = ["Algorithms", "Games", "Shapez", "Combinatorics"]
 cover = ""
 description = "After going through a series of random attempts, I put this project on hold for over a year. Now, it's time to finish what we started but left unfinished before."
 showFullContent = false
