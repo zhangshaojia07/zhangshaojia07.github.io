@@ -33,3 +33,4 @@ A huge thanks to Jane Street and Capital One for sponsoring the event.
 1. [UKIEPC 2026 — official contest page](https://ukiepc.info/2026/)
 2. [UKIEPC 2026 — standings on Kattis](https://ukiepc26.kattis.com/contests/ukiepc26/standings)
 3. [UKIEPC 2026 — contest stream on YouTube](https://www.youtube.com/live/ABAgvOHui6A?si=LZ8r2qS3Uoc8K3PK)
+4. [UKIEPC 2026 — downloads](https://drive.google.com/drive/folders/1wFWDog-IlZ9LMDbkMgd7ophpPpse3HNJ)
