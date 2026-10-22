@@ -4,7 +4,7 @@ title = "Bridg-it - Disjoint Spanning Trees"
 date = "2026-08-13T14:56:26+08:00"
 tags = ["Graph Theory", "Mathematics", "Bridg-it"]
 cover = "fig2.png"
-description = ""
+description = "How disjoint spanning trees give the first player an explicit winning strategy in the game of Bridg-it."
 showFullContent = false
 hideComments = false
 +++

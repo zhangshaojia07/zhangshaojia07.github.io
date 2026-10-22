@@ -3,7 +3,7 @@ author = "Shaojia"
 title = "Hello World"
 date = "2026-02-05T19:43:07+08:00"
 tags = ["Meta", "Blog"]
-description = ""
+description = "Why I started this independent blog and what I plan to write about, from mathematics and programming to personal notes."
 showFullContent = false
 hideComments = false
 +++

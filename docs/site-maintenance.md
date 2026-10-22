@@ -24,7 +24,7 @@ found no missing internal targets. External links were not checked.
 | SITE-001 | Open | Advisory | Photos used by posts retain GPS coordinates in EXIF metadata. |
 | SITE-002 | Open | Advisory | Article images are large and lack responsive loading attributes. |
 | SITE-003 | Open | Medium | MathJax loads site-wide and its configuration may race the async script. |
-| SITE-004 | Open | Medium | Homepage metadata uses the theme's placeholder subtitle; some page descriptions are empty. |
+| SITE-004 | Fixed | Medium | Homepage metadata used the theme's placeholder subtitle; some page descriptions were empty. |
 | SITE-005 | Open | Low | The theme emits 13 separate CSS requests per page. |
 | SITE-006 | Open | Low | The CI npm step currently does nothing and can hide future install failures. |
 
@@ -78,19 +78,24 @@ should render correctly on math pages, including with a warm cache.
 
 ### SITE-004 — Site descriptions and social metadata
 
-The homepage's generated `description` and `og:description` both say
+At the original audit, the homepage's generated `description` and `og:description` both said
 “A simple, retro theme for Hugo”, from the `subtitle` in [`hugo.toml`](../hugo.toml).
-The `description` front matter is empty for
+The `description` front matter was empty for
 [`about`](../content/about/index.md),
 [`hello-world`](../content/posts/hello-world/index.md),
 [`Notes on IMO 2025`](../content/posts/20260206-notes-on-imo-2025/index.md), and
 [`Bridg-it`](../content/posts/20260813-bridg-it-disjoint-spanning-trees/index.md).
+Section and taxonomy pages had blank descriptions. The head partial also lacked
+author tags and emitted a non-ISO publication time.
 
 Replace the placeholder with a site-specific summary and add concise page
-descriptions where the automatic summary is unsuitable.
+descriptions where the automatic summary is unsuitable. Provide descriptions for
+section and taxonomy pages. Emit author metadata and an ISO 8601 publication time
+for posts.
 
 **Acceptance check:** Inspect generated `description` and `og:description` tags
-for the homepage and affected pages.
+for all content and list pages, excluding Hugo redirect aliases. Check author
+tags and parse the publication time on posts.
 
 ### SITE-005 — Separate CSS requests
 
@@ -119,8 +124,8 @@ dependencies install and a failed required install fails the job.
 
 ## Resolution log
 
-No issue has been fully resolved. Record partial progress and completed fixes here,
-including the verification performed.
+Record partial progress and completed fixes here, including the verification
+performed.
 
 - **2026-10-22 — SITE-002 (partial):** Replaced the 4032×3024, 10.5 MB
   `Weiming-Lake.png` with a 1440×1080, 0.3 MB
@@ -134,6 +139,11 @@ including the verification performed.
   actual dimensions of page cover images. Verified the default on Shapez
   Reachability and explicit covers on THUPC, UKIEPC, and Hackathon. The homepage
   subtitle and empty descriptions remain unchanged.
+- **2026-10-22 — SITE-004 (fixed):** Replaced the homepage placeholder subtitle,
+  added descriptions to the four affected pages and list pages, and added author
+  and ISO 8601 publication metadata. Hugo built successfully. Checked generated
+  descriptions on content and list pages, plus author and parseable publication
+  tags on posts.
 
 ## Commit-time image review
 

@@ -81,7 +81,7 @@ pagination.pagerSize = 5
     title = "Shaojia@Blog"
 
     [languages.en.params]
-      subtitle = "A simple, retro theme for Hugo"
+      subtitle = "Personal notes on mathematics, algorithms, programming contests, and other curious things."
       owner = ""
       keywords = ""
       copyright = ""

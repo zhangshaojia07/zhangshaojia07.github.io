@@ -3,7 +3,7 @@ author = "Shaojia"
 title = "About"
 date = "2026-02-05T20:30:17+08:00"
 tags = []
-description = ""
+description = "About Shaojia Zhang, the author of this blog: background, interests, and contact information."
 showFullContent = false
 hideComments = false
 +++
