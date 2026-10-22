@@ -104,14 +104,27 @@ pagination.pagerSize = 5
           identifier = "about"
           name = "About"
           url = "/about"
+          weight = 1
         [[languages.en.menu.main]]
-          identifier = "repo"
-          name = "Repo"
-          url = "https://github.com/zhangshaojia07/zhangshaojia07.github.io"
+          identifier = "cnblogs"
+          name = "CNBlogs"
+          url = "https://www.cnblogs.com/shaojia"
+          weight = 2
+        [[languages.en.menu.main]]
+          identifier = "luogu"
+          name = "Luogu"
+          url = "https://www.luogu.com.cn/user/101868/article"
+          weight = 3
         [[languages.en.menu.main]]
           identifier = "showcase"
           name = "Showcase"
           url = "/showcase"
+          weight = 4
+        [[languages.en.menu.main]]
+          identifier = "repo"
+          name = "Repo"
+          url = "https://github.com/zhangshaojia07/zhangshaojia07.github.io"
+          weight = 5
 
 [caches]
   [caches.images]
