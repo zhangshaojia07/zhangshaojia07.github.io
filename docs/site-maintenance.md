@@ -21,8 +21,8 @@ found no missing internal targets. External links were not checked.
 
 | ID | Status | Priority | Summary |
 | --- | --- | --- | --- |
-| SITE-001 | Open | High | Photos used by posts retain GPS coordinates in EXIF metadata. |
-| SITE-002 | Open | High | Article images are large and lack responsive loading attributes. |
+| SITE-001 | Open | Advisory | Photos used by posts retain GPS coordinates in EXIF metadata. |
+| SITE-002 | Open | Advisory | Article images are large and lack responsive loading attributes. |
 | SITE-003 | Open | Medium | MathJax loads site-wide and its configuration may race the async script. |
 | SITE-004 | Open | Medium | Homepage metadata uses the theme's placeholder subtitle; some page descriptions are empty. |
 | SITE-005 | Open | Low | The theme emits 13 separate CSS requests per page. |
@@ -37,24 +37,25 @@ The following source images contain EXIF GPS latitude and longitude fields:
 - [`leaderboard.jpeg`](../content/posts/20261021-hackathon/leaderboard.jpeg)
 - [`swag.jpeg`](../content/posts/20261021-hackathon/swag.jpeg)
 
-Hugo copied the sampled image byte-for-byte into the generated site. Remove
-unwanted metadata from published copies. Replacing a file does not remove its
-older version from Git history; handle historical copies separately if location
-privacy requires it.
+Hugo copied the sampled image byte-for-byte into the generated site. If a photo's
+location should remain private, remove its GPS metadata. Replacing a file does
+not remove its older version from Git history; handle historical copies
+separately if location privacy requires it.
 
 **Acceptance check:** Inspect all publishable images for GPS fields, then inspect
 the generated copies. Neither should contain unintended location coordinates.
 
 ### SITE-002 — Image weight and loading
 
-In the generated pages, image files referenced by the Hackathon, THUPC, and UKIEPC
-articles total approximately **9.0 MB**, **16.3 MB**, and **6.7 MB**, respectively.
-[`Weiming-Lake.png`](../content/posts/20260413-thupc2026/Weiming-Lake.png)
-alone is about **10.5 MB**. The sampled pages have no `loading="lazy"` or explicit
+At the original audit, image files referenced by the Hackathon, THUPC, and UKIEPC
+articles totaled approximately **9.0 MB**, **16.3 MB**, and **6.7 MB**, respectively.
+The THUPC total is now **6.1 MB** after replacing the 10.5 MB lake PNG with a
+0.3 MB display JPEG. Other sampled pages still have no `loading="lazy"` or explicit
 image dimensions. The theme's [cover partial](../themes/terminal/layouts/partials/cover.html)
 also emits a plain `<img>`.
 
-Generate appropriately sized display images, preferably with responsive variants.
+Original images can intentionally remain at full resolution. When page weight
+matters, generate smaller display images, preferably with responsive variants.
 Add explicit dimensions to avoid layout shifts, and lazy-load images below the
 initial viewport. Preserve an accessible full-resolution version where useful.
 
@@ -118,7 +119,31 @@ dependencies install and a failed required install fails the job.
 
 ## Resolution log
 
-No fixes recorded as of **2026-10-22**. Add entries here when issues are fixed,
-for example:
+No issue has been fully resolved. Record partial progress and completed fixes here,
+including the verification performed.
 
-`YYYY-MM-DD — SITE-XXX — Fixed in <commit or PR>. Verified with <specific check>.`
+- **2026-10-22 — SITE-002 (partial):** Replaced the 4032×3024, 10.5 MB
+  `Weiming-Lake.png` with a 1440×1080, 0.3 MB
+  [`Weiming-Lake.jpg`](../content/posts/20260413-thupc2026/Weiming-Lake.jpg).
+  The THUPC article's image files now total 6.1 MB. Verified the generated article
+  references the JPEG and no longer publishes the PNG. Other images and loading
+  behavior remain for review.
+- **2026-10-22 — SITE-004 (partial):** The local
+  [head override](../layouts/partials/head.html) now treats `cover = ""` as absent,
+  so pages without a cover use the default `og-image.png`. It also reports the
+  actual dimensions of page cover images. Verified the default on Shapez
+  Reachability and explicit covers on THUPC, UKIEPC, and Hackathon. The homepage
+  subtitle and empty descriptions remain unchanged.
+
+## Commit-time image review
+
+The versioned [pre-commit hook](../.githooks/pre-commit) examines only staged
+added, copied, modified, or renamed images. It warns about GPS EXIF and
+files over **5 MiB**, then asks whether to continue. It never edits or compresses
+images. Its warnings do not resolve SITE-001 or SITE-002.
+
+Enable it once per clone with `git config --local core.hooksPath .githooks`.
+Python 3 is required. Install Pillow to inspect GPS EXIF; if Pillow is missing or
+an image cannot be read, the hook warns that the metadata check was unavailable
+and still asks for confirmation. When a warning occurs, commit from an
+interactive terminal: without a terminal, the hook cancels the commit.

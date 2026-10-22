@@ -3,6 +3,7 @@ author = "Shaojia"
 title = "THUPC 2026 Trip Report"
 date = "2026-04-13T23:25:02+08:00"
 tags = ["THUPC", "ICPC", "Competitive Programming", "Trip Report"]
+cover = "Weiming-Lake.jpg"
 description = "I caught the train to Beijing on 11th April to compete in THUPC 2026 the following day, after months away from OI. It's a bittersweet farewell to my ten-year competitive career."
 showFullContent = false
 hideComments = false
@@ -26,4 +27,4 @@ Coming 11th meant a Third Prize, which carries a prize fund of 256 RMB per team 
 
 My teammates and friends didn't have as much free time as I did. Some are now studying at PKU and are in the middle of maths analysis mid-terms. Others are either in the final sprint for NOI or fully immersed in Gaokao revision. I was left to my own devices on the morning of 13th April, wandering around the PKU campus. I couldn't help thinking about how those old friends I used to compete with are now going their separate ways. It might be the last time we all gather like this, or perhaps not. This competition felt like a brief look back at my ten-year competitive career. It feels like the right time to say goodbye to it.
 
-{{< figure src="Weiming-Lake.png" alt="Weiming-Lake" position="center" caption="Weiming Lake on the campus of PKU" captionPosition="center" >}}
+{{< figure src="Weiming-Lake.jpg" alt="Weiming Lake on the PKU campus" position="center" caption="Weiming Lake on the campus of PKU" captionPosition="center" >}}
