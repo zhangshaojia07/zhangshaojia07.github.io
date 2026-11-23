@@ -1,11 +1,13 @@
 # Site maintenance log
 
-This file tracks findings from a read-only audit on **2026-10-22**. It lives outside
-Hugo's `content/` and `static/` directories, so it is not part of the published site.
+This file tracks findings from a read-only audit on **2026-10-22** and a
+read-only re-verification on **2026-11-23**. It lives outside Hugo's `content/`
+and `static/` directories, so it is not part of the published site.
 
-The audit used Hugo **0.154.5** locally; the GitHub Actions workflow specifies
-**0.155.0**. The build succeeded, and a check of generated `href` and `src` values
-found no missing internal targets. External links were not checked.
+Both checks used Hugo **0.154.5** locally; the GitHub Actions workflow specifies
+**0.155.0**. The build succeeded on both dates, and a check of generated `href`
+and `src` values found no missing internal targets. External links were not
+checked.
 
 ## How to maintain this log
 
@@ -50,9 +52,12 @@ the generated copies. Neither should contain unintended location coordinates.
 At the original audit, image files referenced by the Hackathon, THUPC, and UKIEPC
 articles totaled approximately **9.0 MB**, **16.3 MB**, and **6.7 MB**, respectively.
 The THUPC total is now **6.1 MB** after replacing the 10.5 MB lake PNG with a
-0.3 MB display JPEG. Other sampled pages still have no `loading="lazy"` or explicit
-image dimensions. The theme's [cover partial](../themes/terminal/layouts/partials/cover.html)
-also emits a plain `<img>`.
+0.3 MB display JPEG. The 2026-11-23 re-check measured **8.9 MB**, **6.1 MB**, and
+**6.7 MB** for the same three articles; the largest single files remain
+`awkward-photo.jpg` (5.6 MB) and `team-photo.jpeg` (5.4 MB). Other sampled pages
+still have no `loading="lazy"` or explicit image dimensions. The theme's
+[cover partial](../themes/terminal/layouts/partials/cover.html) also emits a plain
+`<img>`.
 
 Original images can intentionally remain at full resolution. When page weight
 matters, generate smaller display images, preferably with responsive variants.
@@ -144,6 +149,35 @@ performed.
   and ISO 8601 publication metadata. Hugo built successfully. Checked generated
   descriptions on content and list pages, plus author and parseable publication
   tags on posts.
+- **2026-11-23 — Re-verification:** Built the site locally with Hugo 0.154.5
+  (`hugo --gc --minify --cleanDestinationDir`, 69 pages, 84 ms). Re-checked each
+  open issue against source and generated output: SITE-001 still finds the same
+  four GPS images; SITE-002 measured the same image totals and found no `loading`
+  or dimension attributes; SITE-003 confirmed `params.math = true` and that the
+  `async` script still precedes its configuration; SITE-005 counted 13 stylesheet
+  requests per page; SITE-006 confirmed the npm step is still a no-op. SITE-004
+  remains fixed.
+
+## Repository hygiene
+
+- `themes/terminal` is a git submodule. Do not edit files inside it. Local
+  overrides belong in the project root `layouts/` directory, which Hugo checks
+  first. Current overrides: `head.html`, `extended_head.html`, and `math.html`
+  under `layouts/partials/`.
+- `git log --all -- AGENTS.md docs` may show commits named
+  `Agent host session <id> - baseline checkpoint`. These are Cline tool
+  artifacts, referenced only by `refs/agents/<session>/checkpoints/turn/N`.
+  They are not under `refs/heads` or `refs/remotes`, so a normal `git push`
+  does not publish them, and they are not part of the project history.
+  `git gc --prune=now` alone will not remove them because those refs still
+  point at them. Reclaim them only with the user's explicit approval, for
+  example by listing the refs with `git for-each-ref refs/agents` and deleting
+  them with `git update-ref -d`.
+- These paths are gitignored local artifacts and must not be committed:
+  `public/`, `resources/`, `.hugo_build.lock`, and `.obsidian/` directories
+  under `content/`.
+- Local Hugo is 0.154.5. CI pins its own version in `.github/workflows/hugo.yaml`;
+  read that file rather than assuming a version.
 
 ## Commit-time image review
 

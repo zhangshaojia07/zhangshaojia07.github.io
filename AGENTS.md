@@ -9,6 +9,23 @@ entry to the resolution log with the change and verification performed. Keep the
 original issue entry so future maintainers can see what was fixed. Keep work within
 the user's requested scope; open issues are context for future work.
 
+## Project constraints
+
+- `themes/terminal` is a git submodule. Do not edit files inside it; override
+  templates from the project root `layouts/` directory instead. Existing
+  overrides are `head.html`, `extended_head.html`, and `math.html` under
+  `layouts/partials/`.
+- `public/`, `resources/`, `.hugo_build.lock`, and `.obsidian/` are local build
+  or editor artifacts. They are gitignored and must not be committed.
+- Local Hugo is 0.154.5. CI pins its own version in
+  `.github/workflows/hugo.yaml`; read the workflow rather than assuming.
+- `hugo` builds with the production environment; `hugo server` uses development.
+  Use `hugo.IsProduction` or `hugo.IsServer` for environment-specific rendering.
+- To publish a page that stays reachable by URL but hidden from menus, page
+  collections, RSS, and sitemaps, set front matter `[build] list = 'never'`,
+  `render = 'always'`, `[sitemap] disable = true`, and `noindex = true`.
+  `site.GetPage` still resolves such pages, which supports local-only links.
+
 Before committing image changes in this clone, enable the checked-in hook with
 `git config --local core.hooksPath .githooks`. If it reports image warnings, show
 them to the user and wait for an explicit decision before confirming the prompt.
