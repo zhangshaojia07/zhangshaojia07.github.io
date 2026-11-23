@@ -4,7 +4,7 @@ title = "QRT x C3 Hackathon: 9th Place in a 2-Hour Agentic Coding Sprint"
 date = "2026-10-22T15:26:42+01:00"
 tags = ["Hackathon", "Competitive Programming", "Algorithms", "AI", "Cambridge"]
 description = "Yesterday evening I joined Reet, Artem and Vedant for the QRT x C3 Hackathon hosted by CUCaTS. We placed 9th in a fast-paced two-hour agentic coding sprint built around four open-ended optimisation challenges."
-cover = "cover.png"
+cover = "cover.webp"
 showFullContent = false
 hideComments = false
 +++
@@ -23,7 +23,7 @@ The problem I owned was deceptively simple and classically NP-hard: pack a bunch
 
 The grader showed you your own output but kept the input hidden, so I ended up writing a script to reverse-engineer the input from my own output, then pulled the JSON packets straight out of the browser's F12 dev tools to batch-process the cases. It was a bit hacky and ate up a fair amount of time, and in the end my score on that problem still fell short of the top few teams.
 
-{{< figure src="workspace.png" alt="VS Code and Codex" position="center" caption="My workspace during the contest: VS Code and the Codex window" captionPosition="center" >}}
+{{< figure src="workspace.webp" alt="VS Code and Codex" position="center" caption="My workspace during the contest: VS Code and the Codex window" captionPosition="center" >}}
 
 With only two hours on the clock there was no room for a careful, read-everything-first approach. The workflow that actually won out was: skim a problem, spin up a quick script with heavy help from AI tools, throw it at the grader, and iterate. It felt less like problem solving and more like a pit stop.
 

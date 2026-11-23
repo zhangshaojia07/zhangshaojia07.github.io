@@ -26,9 +26,13 @@ From `H1` to `H6` are all available. They are not shown to maintaining the tidin
 
 ## Images
 
+### Markdown image
+
 ![Terminal Theme Preview](test.png)
 
-<img src="test.png" alt="Terminal Theme Preview"/>
+### Raw HTML image with explicit attributes
+
+<img src="test.png" alt="Terminal Theme Preview" width="780" height="109" loading="lazy" decoding="async">
 
 ### Figure with a caption
 

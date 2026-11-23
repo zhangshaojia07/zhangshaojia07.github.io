@@ -1,0 +1,26 @@
+{{/* Local image render hook; adds responsive images to Markdown images. */}}
+{{- $dest := .Destination -}}
+{{- $res := false -}}
+{{- $u := urls.Parse $dest -}}
+{{- if and (not $u.IsAbs) .Page -}}
+  {{- with .Page.Resources.GetMatch $u.Path -}}
+    {{- $res = . -}}
+  {{- end -}}
+{{- end -}}
+{{- if and $res (reflect.IsImageResource $res) -}}
+  {{- $set := partial "img-set.html" (dict "image" $res) -}}
+  <img src="{{ $set.src }}"
+    {{- with $set.srcset }} srcset="{{ . }}" sizes="(max-width: 684px) calc(100vw - 40px), 784px"{{ end }}
+    {{- with $set.width }} width="{{ . }}"{{ end }}
+    {{- with $set.height }} height="{{ . }}"{{ end }}
+    alt="{{ .PlainText }}"
+    {{- with .Title }} title="{{ . }}"{{ end }}
+    loading="lazy"
+    decoding="async">
+{{- else -}}
+  <img src="{{ $dest }}"
+    alt="{{ .PlainText }}"
+    {{- with .Title }} title="{{ . }}"{{ end }}
+    loading="lazy"
+    decoding="async">
+{{- end -}}

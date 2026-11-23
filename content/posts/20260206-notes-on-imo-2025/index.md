@@ -26,13 +26,13 @@ First, let's handle the base case ($n=3$).
 After enumerating all possibilities, we find that if one line is sunny, then the other two lines are either **both sunny or both not sunny**.  
 So $k \neq 2$. Figure [1](#p1-fig1) shows the constructions for the other cases.
 
-<img src="p1-fig1.png" id="p1-fig1">
+<img src="p1-fig1.png" id="p1-fig1" alt="Figure 1" width="910" height="312" loading="lazy" decoding="async">
 
 For $n > 3$, see Figure [2](#p1-fig2).  
 If the configuration contains at least one border line (the black lines in the figure), we can reduce the problem of order $n$ to a problem of order $n-1$.  
 Otherwise, every line can pass through at most 2 red dots. This means we need at least $\frac{3n-3}{2}$ lines, which is greater than $n$.
 
-<img src="p1-fig2.png" id="p1-fig2">
+<img src="p1-fig2.png" id="p1-fig2" alt="Figure 2" width="910" height="546" loading="lazy" decoding="async">
 
 ## Problem 4
 
@@ -88,7 +88,7 @@ Moreover, the LIS and LDS share exactly one common element, which we call O.
 
 We then color the sides of the uncovered squares according to their relative positions with respect to the LIS, LDS, and O (see the figure below).
 
-![](p6-analysis.png)
+![Coloring of the uncovered squares](p6-analysis.png)
 
 The coloring is a bit tricky to describe in words (for example, O has all four sides colored, while squares not on LIS or LDS have exactly one side colored).
 

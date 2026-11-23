@@ -1,0 +1,45 @@
+{{/* Local override of Hugo's embedded figure shortcode; adds responsive images. */}}
+{{- $src := .Get "src" -}}
+{{- $alt := .Get "alt" -}}
+{{- $caption := .Get "caption" -}}
+{{- if and (not $alt) $caption -}}
+  {{- $alt = $caption | markdownify | plainify -}}
+{{- end -}}
+{{- $loading := .Get "loading" | default "lazy" -}}
+{{- $res := false -}}
+{{- $u := urls.Parse $src -}}
+{{- if and (not $u.IsAbs) .Page -}}
+  {{- with .Page.Resources.GetMatch $u.Path -}}
+    {{- $res = . -}}
+  {{- end -}}
+{{- end -}}
+<figure{{ with .Get "class" }} class="{{ . }}"{{ end }}>
+  {{- with .Get "link" }}<a href="{{ . }}"{{ with $.Get "target" }} target="{{ . }}"{{ end }}{{ with $.Get "rel" }} rel="{{ . }}"{{ end }}>{{ end -}}
+  {{- if and $res (reflect.IsImageResource $res) -}}
+    {{- $set := partial "img-set.html" (dict "image" $res) -}}
+    <img src="{{ $set.src }}"
+      {{- with $set.srcset }} srcset="{{ . }}" sizes="(max-width: 684px) calc(100vw - 40px), 784px"{{ end }}
+      {{- with .Get "width" }} width="{{ . }}"{{ else }}{{ with $set.width }} width="{{ . }}"{{ end }}{{ end }}
+      {{- with .Get "height" }} height="{{ . }}"{{ else }}{{ with $set.height }} height="{{ . }}"{{ end }}{{ end }}
+      {{- with $alt }} alt="{{ . }}"{{ end }}
+      loading="{{ $loading }}"
+      decoding="async">
+  {{- else -}}
+    <img src="{{ $src }}"
+      {{- with .Get "width" }} width="{{ . }}"{{ end }}
+      {{- with .Get "height" }} height="{{ . }}"{{ end }}
+      {{- with $alt }} alt="{{ . }}"{{ end }}
+      loading="{{ $loading }}"
+      decoding="async">
+  {{- end -}}
+  {{- with .Get "link" }}</a>{{ end }}
+  {{- if or (.Get "title") $caption (.Get "attr") }}
+    <figcaption>
+      {{- with .Get "title" }}<h4>{{ . }}</h4>{{ end -}}
+      {{- with $caption }}<p>{{ . | markdownify }}
+        {{- with $.Get "attr" }} <a href="{{ $.Get "attrlink" | default "#" }}">{{ . }}</a>{{ end -}}
+      </p>{{ end -}}
+      {{- if and (not $caption) (.Get "attr") }}<p><a href="{{ .Get "attrlink" | default "#" }}">{{ .Get "attr" }}</a></p>{{ end -}}
+    </figcaption>
+  {{- end }}
+</figure>

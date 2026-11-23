@@ -1,0 +1,79 @@
+{{/*
+Returns src, srcset, width, and height for an image resource.
+
+Usage:
+  {{ $set := partial "img-set.html" (dict "image" $resource) }}
+
+Photos (JPEG and WebP) get 480/960/1200 variants, plus a 1600 variant when
+wider. Screenshots (PNG/TIFF) get a 480px WebP variant, plus 960/1200/1600
+WebP variants when wider than 1600px. Originals wider than 1600px are not
+offered to browsers, so a phone never downloads a camera-resolution file.
+Images already at or below the display width keep their original bytes.
+*/}}
+{{- $img := .image -}}
+{{- $src := $img.RelPermalink -}}
+{{- $srcset := "" -}}
+{{- $width := $img.Width -}}
+{{- $height := $img.Height -}}
+{{- $outWidth := $width -}}
+{{- $outHeight := $height -}}
+{{- $sub := $img.MediaType.SubType -}}
+{{- $processable := and (reflect.IsImageResource $img) (in (slice "jpeg" "png" "tiff" "webp") $sub) -}}
+
+{{/* EXIF orientation 5-8 swaps the displayed width and height. */}}
+{{- $orientation := 0 -}}
+{{- if $processable -}}
+  {{- with $img.Exif -}}
+    {{- with .Tags.Orientation -}}{{- $orientation = . -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if in (slice "5" "6" "7" "8") (printf "%v" $orientation) -}}
+  {{- $width = $img.Height -}}
+  {{- $height = $img.Width -}}
+{{- end -}}
+
+{{- if and $processable (gt $width 480) -}}
+  {{- $oriented := $img.Filter images.AutoOrient -}}
+  {{- $width = $oriented.Width -}}
+  {{- $height = $oriented.Height -}}
+
+  {{- $widths := slice 480 -}}
+  {{- if or (in (slice "jpeg" "webp") $sub) (gt $oriented.Width 1600) -}}
+    {{- $widths = slice 480 960 1200 -}}
+    {{- if gt $oriented.Width 1600 -}}
+      {{- $widths = slice 480 960 1200 1600 -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $entries := slice -}}
+  {{- $largest := false -}}
+  {{- range $widths -}}
+    {{- if lt . $oriented.Width -}}
+      {{- $spec := printf "%dx" . -}}
+      {{- if eq $sub "jpeg" -}}
+        {{- $spec = printf "%dx q85" . -}}
+      {{- else -}}
+        {{- $spec = printf "%dx webp q90" . -}}
+      {{- end -}}
+      {{- $variant := $oriented.Resize $spec -}}
+      {{- $entries = $entries | append (printf "%s %dw" $variant.RelPermalink $variant.Width) -}}
+      {{- $largest = $variant -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if $entries -}}
+    {{- if le $oriented.Width 1600 -}}
+      {{- $entries = $entries | append (printf "%s %dw" $img.RelPermalink $width) -}}
+      {{- $src = $img.RelPermalink -}}
+    {{- else -}}
+      {{- with $largest -}}
+        {{- $src = .RelPermalink -}}
+        {{- $outWidth = .Width -}}
+        {{- $outHeight = .Height -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $srcset = delimit $entries ", " -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return (dict "src" $src "srcset" $srcset "width" $outWidth "height" $outHeight) -}}

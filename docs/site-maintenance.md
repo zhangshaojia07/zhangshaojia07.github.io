@@ -23,8 +23,8 @@ checked.
 
 | ID | Status | Priority | Summary |
 | --- | --- | --- | --- |
-| SITE-001 | Open | Advisory | Photos used by posts retain GPS coordinates in EXIF metadata. |
-| SITE-002 | Open | Advisory | Article images are large and lack responsive loading attributes. |
+| SITE-001 | Fixed | Advisory | Photos used by posts retain GPS coordinates in EXIF metadata. |
+| SITE-002 | Fixed | Advisory | Article images are large and lack responsive loading attributes. |
 | SITE-003 | Open | Medium | MathJax loads site-wide and its configuration may race the async script. |
 | SITE-004 | Fixed | Medium | Homepage metadata used the theme's placeholder subtitle; some page descriptions were empty. |
 | SITE-005 | Open | Low | The theme emits 13 separate CSS requests per page. |
@@ -158,12 +158,78 @@ performed.
   requests per page; SITE-006 confirmed the npm step is still a no-op. SITE-004
   remains fixed.
 
+- **2026-11-23 - SITE-002 (in progress):** Added local template overrides
+  that render responsive images: [`img-set.html`](../layouts/partials/img-set.html)
+  computes `src`, `srcset`, and dimensions; [`cover.html`](../layouts/partials/cover.html)
+  overrides the theme cover partial; [`figure.html`](../layouts/shortcodes/figure.html)
+  replaces the embedded figure shortcode; and
+  [`render-image.html`](../layouts/_default/_markup/render-image.html) handles
+  Markdown images. JPEG images get 480/960/1200/1600 variants at quality 85;
+  PNG/WebP/TIFF images wider than 1600px get 480/960/1200/1600 WebP variants at
+  quality 90. `images.AutoOrient` corrects EXIF orientation, and originals wider
+  than 1600px are excluded from `srcset` so phones do not fetch them. Every
+  generated `<img>` now has `width`, `height`, `loading`, `decoding`, and `alt`;
+  the three raw `<img>` tags in the IMO post and the showcase page were given
+  explicit dimensions. Built with Hugo 0.154.5: 69 pages, 79 processed images,
+  cold build 11.4 s (452 MB peak RSS), warm build under 2 s. Verified 0 images
+  missing dimensions, loading, decoding, or alt text, and 0 missing `srcset`
+  targets. Deduplicated image transfer fell from 9.04 MB to about 0.75 MB at
+  390 CSS px DPR3, 553 KB at 784 CSS px DPR1, and 1.15 MB at DPR2 on the
+  Hackathon article. Replacing the six largest source images and removing their
+  GPS metadata are still pending. Several source photos use Display P3 ICC
+  profiles; replacement images should be converted to sRGB before commit,
+  because Hugo's processed variants do not carry the source ICC profile.
+
+- **2026-11-23 - SITE-002 (progress):** Fixed the image distortion introduced by
+  the explicit `width`/`height` attributes: [`extended_head.html`](../layouts/partials/extended_head.html)
+  now sets `img { height: auto; }`, and browser checks confirm the rendered
+  content-box ratios match the source files. Added
+  [image templates](../docs/image-templates.md) and made the
+  [showcase](../content/showcase/index.md) demonstrate Markdown, raw `<img>`,
+  and `figure` forms. Added
+  [`scripts/images.py`](../scripts/images.py) to CI so
+  generated `<img>` tags without `src`, `width`, `height`, `loading`,
+  `decoding`, or `alt` fail the build. Generated a local `image-review/`
+  directory (gitignored) with 10 optimized files:
+  photos and P3 images converted to sRGB and capped at 1600px width, and three
+  PNG images converted to WebP quality 90. Totals fell from 21.6 MB to
+  2.8 MB; every output has 0 EXIF keys and 0 GPS tags. `team-photo.jpeg` uses
+  JPEG q92 with 4:4:4 chroma for extra face detail; the other photos use q85.
+  Originals are untouched;
+  replacement awaits review. The privacy checker was added to the same CLI and
+  enabled after the GPS sources were replaced.
+- **2026-11-23 - SITE-001 (partial):** The review copies generated for SITE-002
+  have GPS metadata removed, but the four source files and Git history still
+  contain GPS coordinates. Source replacement is pending.
+- **2026-11-23 - SITE-001 (fixed):** Replaced the four GPS source photos with
+  GPS-free versions. `scripts/images.py check-privacy` reports 0 GPS tags in `content`
+  (27 images) and in the generated site (77 images). Older blobs remain in Git
+  history; handle history separately if location privacy requires it.
+- **2026-11-23 - SITE-002 (fixed):** Replaced the six largest sources and the
+  two additional P3 photos with 1600px sRGB copies, converted three PNGs to
+  WebP, updated the cover and figure references, and removed the old PNGs.
+  WebP sources now receive 480/960/1200 variants. WebP covers generate a
+  1200x630 JPEG for `og:image`. Built with Hugo 0.154.5 and 0.155.0; attribute
+  and privacy checks pass. Deduplicated image transfer: Hackathon 9.04 MB to
+  0.20 MB at 390px, 0.59 MB at 784px DPR1, and 1.11 MB at DPR2; UKIEPC 6.74 MB
+  to 0.12/0.41/1.13 MB; THUPC 6.11 MB to 0.10/0.39/0.70 MB. The SITE-002
+  acceptance check passes.
+
+- **2026-11-23 - Image tooling:** Consolidated the image checks into
+  `scripts/images.py` with `check-attributes`, `check-privacy`, `check-staged`,
+  `check`, `prepare`, and `apply`. `prepare` writes balanced, faces, and
+  screenshot variants plus `preview.html` and `manifest.md`; `apply` copies
+  same-extension outputs and prints reference hints for format changes. The
+  pre-commit hook and CI use the new entry point.
+
 ## Repository hygiene
 
 - `themes/terminal` is a git submodule. Do not edit files inside it. Local
   overrides belong in the project root `layouts/` directory, which Hugo checks
-  first. Current overrides: `head.html`, `extended_head.html`, and `math.html`
-  under `layouts/partials/`.
+  first. Current overrides: `head.html`, `extended_head.html`, `math.html`,
+  `cover.html`, and `img-set.html` under `layouts/partials/`; `figure.html`
+  under `layouts/shortcodes/`; and `render-image.html` under
+  `layouts/_default/_markup/`.
 - `git log --all -- AGENTS.md docs` may show commits named
   `Agent host session <id> - baseline checkpoint`. These are Cline tool
   artifacts, referenced only by `refs/agents/<session>/checkpoints/turn/N`.
@@ -176,6 +242,9 @@ performed.
 - These paths are gitignored local artifacts and must not be committed:
   `public/`, `resources/`, `.hugo_build.lock`, and `.obsidian/` directories
   under `content/`.
+- `image-review/` is a gitignored local staging directory for image review.
+  Do not commit it. Generated review files can be checked with
+  `python3 scripts/images.py check-privacy image-review`.
 - Local Hugo is 0.154.5. CI pins its own version in `.github/workflows/hugo.yaml`;
   read that file rather than assuming a version.
 
@@ -201,3 +270,7 @@ Python 3 is required. Install Pillow to inspect GPS EXIF; if Pillow is missing o
 an image cannot be read, the hook warns that the metadata check was unavailable
 and still asks for confirmation. When a warning occurs, commit from an
 interactive terminal: without a terminal, the hook cancels the commit.
+
+CI runs `python3 scripts/images.py check` after the build. It covers image
+attributes and GPS privacy over both `public` and `content` using Pillow in a
+temporary virtual environment. The job fails on violations.

@@ -3,7 +3,7 @@ author = "Shaojia"
 title = "UKIEPC 2026: Top 4% with Two First-Timers"
 date = "2026-10-18T11:06:07+01:00"
 tags = ["UKIEPC", "ICPC", "Competitive Programming", "Cambridge"]
-cover = "final-standings.png"
+cover = "final-standings.webp"
 description = "Yesterday I took part in UKIEPC 2026 as team tokenmaxxers with Artem Kordonets and Reet Kothari. We solved 10 problems and finished 12th out of 364 teams (top 4%), rekindling my long-dormant love for competitive programming."
 showFullContent = false
 hideComments = false
@@ -27,7 +27,7 @@ A huge thanks to Jane Street and Capital One for sponsoring the event.
 
 {{< figure src="preparation.jpeg" alt="preparation" position="center" caption="Preparation" captionPosition="center" >}}
 
-{{< figure src="final-standings.png" alt="final-standings" position="center" caption="Final standings" captionPosition="center" >}}
+{{< figure src="final-standings.webp" alt="final-standings" position="center" caption="Final standings" captionPosition="center" >}}
 
 ## References
 

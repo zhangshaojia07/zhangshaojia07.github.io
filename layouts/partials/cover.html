@@ -1,0 +1,37 @@
+{{/* Local copy of the Terminal theme cover partial; review on theme updates. */}}
+{{- $cover := false -}}
+{{- $coverResource := false -}}
+
+{{- if index .Params "cover" -}}
+  {{- with .Resources.GetMatch .Params.Cover -}}
+    {{- $coverResource = . -}}
+  {{- else -}}
+    {{- $cover = absURL .Params.Cover -}}
+  {{- end -}}
+{{- else if $.Site.Params.autoCover -}}
+  {{- if not .Params.Cover -}}
+    {{- with .Resources.GetMatch "cover.*" -}}
+      {{- $coverResource = . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if and $coverResource (reflect.IsImageResource $coverResource) -}}
+  {{- $set := partial "img-set.html" (dict "image" $coverResource) -}}
+  <img src="{{ $set.src }}"
+    {{- with $set.srcset }} srcset="{{ . }}" sizes="(max-width: 684px) calc(100vw - 40px), 784px"{{ end }}
+    {{- with $set.width }} width="{{ . }}"{{ end }}
+    {{- with $set.height }} height="{{ . }}"{{ end }}
+    class="post-cover"
+    loading="lazy"
+    decoding="async"
+    alt="{{ .Title | plainify | default " " }}"
+    title="{{ .Params.CoverCredit | plainify | default "Cover Image" }}" />
+{{- else if $cover -}}
+  <img src="{{ $cover }}"
+    class="post-cover"
+    loading="lazy"
+    decoding="async"
+    alt="{{ .Title | plainify | default " " }}"
+    title="{{ .Params.CoverCredit | plainify | default "Cover Image" }}" />
+{{- end -}}

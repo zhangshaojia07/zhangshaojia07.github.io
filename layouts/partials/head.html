@@ -78,9 +78,17 @@
   {{ $ogImageWidth = 0 }}
   {{ $ogImageHeight = 0 }}
   {{ with $.Resources.GetMatch . }}
-    {{ $ogImage = .Permalink }}
-    {{ $ogImageWidth = .Width }}
-    {{ $ogImageHeight = .Height }}
+    {{ $og := . }}
+    {{ if eq .MediaType.SubType "webp" }}
+      {{ if and (ge .Width 1200) (ge .Height 630) }}
+        {{ $og = .Fill "1200x630 center jpg q90" }}
+      {{ else }}
+        {{ $og = .Resize "1200x jpg q90" }}
+      {{ end }}
+    {{ end }}
+    {{ $ogImage = $og.Permalink }}
+    {{ $ogImageWidth = $og.Width }}
+    {{ $ogImageHeight = $og.Height }}
   {{ end }}
 {{ end }}
 <meta property="og:image" content="{{ $ogImage }}">

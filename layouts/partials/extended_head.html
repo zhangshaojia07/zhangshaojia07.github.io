@@ -3,6 +3,13 @@ To add an extended head section, please create
 `layouts/partials/extended_head.html` in your Hugo directory.
 -->
 
+<style>
+  /* Keep the intrinsic aspect ratio when max-width constrains an image. */
+  img {
+    height: auto;
+  }
+</style>
+
 {{ if .Param "math" }}
   {{ partial "math.html" . }}
 {{ end }}

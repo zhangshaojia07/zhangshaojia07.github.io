@@ -2,4 +2,4 @@
 set -eu
 
 repo_root=$(git rev-parse --show-toplevel)
-exec python3 "$repo_root/scripts/check_staged_images.py"
+exec python3 "$repo_root/scripts/images.py" check-staged

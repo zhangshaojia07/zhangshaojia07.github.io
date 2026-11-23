@@ -99,6 +99,11 @@ jobs:
             echo "::error::showcase leaked into RSS"
             exit 1
           fi
+      - name: Check images
+        run: |
+          python3 -m venv "${RUNNER_TEMP}/imgcheck"
+          "${RUNNER_TEMP}/imgcheck/bin/pip" install --quiet pillow
+          "${RUNNER_TEMP}/imgcheck/bin/python" scripts/images.py check
       - name: Cache save
         id: cache-save
         uses: actions/cache/save@v5

@@ -13,8 +13,19 @@ the user's requested scope; open issues are context for future work.
 
 - `themes/terminal` is a git submodule. Do not edit files inside it; override
   templates from the project root `layouts/` directory instead. Existing
-  overrides are `head.html`, `extended_head.html`, and `math.html` under
-  `layouts/partials/`.
+  overrides are `head.html`, `extended_head.html`, `math.html`, `cover.html`,
+  and `img-set.html` under `layouts/partials/`; `figure.html` under
+  `layouts/shortcodes/`; and `render-image.html` under
+  `layouts/_default/_markup/`.
+- When adding images, follow [docs/image-templates.md](docs/image-templates.md).
+  Prefer Markdown images or the `figure` shortcode. Raw `<img>` tags must list
+  `width`, `height`, `loading`, `decoding`, and `alt`.
+- Before committing a new image, resize photos to 1600px width, auto-orient,
+  convert P3 to sRGB, and strip metadata. See the preparation section in the
+  image templates doc. CI checks GPS metadata and `<img>` attributes.
+- Image checks and preset preparation live in `scripts/images.py`. Use
+  `python3 scripts/images.py prepare ... --open` to compare presets, and
+  `python3 scripts/images.py check` before committing.
 - `public/`, `resources/`, `.hugo_build.lock`, and `.obsidian/` are local build
   or editor artifacts. They are gitignored and must not be committed.
 - Local Hugo is 0.154.5. CI pins its own version in
