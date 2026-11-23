@@ -1,0 +1,12 @@
+{{/*
+Local-only entry to the hidden showcase page. The production build contains no
+link to /showcase anywhere; only `hugo server` renders this block on the home
+page. Site.GetPage resolves pages even when build.list is "never".
+*/}}
+{{ if and hugo.IsServer .IsHome }}
+  {{ with site.GetPage "/showcase" }}
+    <div class="dev-only">
+      <a href="{{ .RelPermalink }}">[dev] showcase</a>
+    </div>
+  {{ end }}
+{{ end }}

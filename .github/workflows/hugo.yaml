@@ -84,6 +84,21 @@ jobs:
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/" \
             --cacheDir "${{ runner.temp }}/hugo_cache"
+      - name: Verify hidden showcase is not discoverable
+        run: |
+          set -euo pipefail
+          if grep -rilE 'href=[^ >]*showcase' public --exclude-dir=showcase; then
+            echo "::error::hidden showcase link leaked into built output"
+            exit 1
+          fi
+          if grep -qi 'showcase' public/sitemap.xml; then
+            echo "::error::showcase leaked into sitemap"
+            exit 1
+          fi
+          if grep -qi 'showcase' public/index.xml; then
+            echo "::error::showcase leaked into RSS"
+            exit 1
+          fi
       - name: Cache save
         id: cache-save
         uses: actions/cache/save@v5

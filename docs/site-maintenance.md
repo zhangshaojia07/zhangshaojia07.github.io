@@ -179,6 +179,16 @@ performed.
 - Local Hugo is 0.154.5. CI pins its own version in `.github/workflows/hugo.yaml`;
   read that file rather than assuming a version.
 
+## Unlisted pages
+
+`content/showcase/` is intentionally unlisted. It sets `build.list = "never"`,
+`build.render = "always"`, `sitemap.disable = true`, and `noindex = true`, and its
+menu entry is removed from `hugo.toml`. The page is still published and reachable
+at `/showcase/` by direct URL. Under `hugo server`, the homepage footer renders a
+`[dev] showcase` link through `layouts/partials/extended_footer.html`; the
+production build emits no such link. CI fails the build if the output, sitemap,
+or RSS exposes the page link. Do not add it back to menus or collections.
+
 ## Commit-time image review
 
 The versioned [pre-commit hook](../.githooks/pre-commit) examines only staged
